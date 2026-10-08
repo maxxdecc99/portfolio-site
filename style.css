@@ -1,0 +1,78 @@
+/* 1. */
+:root {
+  --bg: #f3f6f9;          /* lichte grijsblauwe achtergrond */
+  --card-bg: #ffffff;     /* wit voor de kaarten */
+  --border: #d8e0e8;      /* subtiele randkleur */
+  --text: #11151c;        /* bijna zwart voor tekst */
+  --muted: #5a6573;       /* grijs voor subtitels */
+  --accent: #1d6b72;      /* teal-kleur */
+}
+
+/* 2. */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 3. De pagina als geheel */
+body {
+  background: var(--bg);  /* var(--bg) haalt de waarde uit stap 1 op */
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; /* systeemlettertype van het apparaat */
+  line-height: 1.6;       /* regelafstand: 1,6 keer de lettergrootte */
+}
+
+/* 4. Inhoud niet over de volle schermbreedte, maar gecentreerd */
+header,
+main {
+  max-width: 1100px;      /* nooit breder dan 1100 pixels */
+  margin: 0 auto;         /* 0 boven/onder, "auto" links/rechts = centreren */
+  padding: 0 24px;        /* ruimte aan de zijkanten, belangrijk op mobiel */
+}
+
+/* 5. Ruimte tussen de secties */
+section {
+  padding: 80px 0;              /* 80px boven en onder, 0 links/rechts */
+}
+
+/* 6. Sectietitels */
+h2 {
+  font-size: 2.5rem;            /* rem = relatief aan de standaard lettergrootte (meestal 16px), dus 2.5rem ≈ 40px */
+  letter-spacing: -0.03em;      /* letters iets dichter op elkaar */
+  line-height: 1.1;
+}
+
+/* 7. De subtitel onder elke h2 */
+section > p {
+  color: var(--muted);
+  font-size: 1.2rem;
+  margin: 12px 0 32px;          /* 12px boven, 0 zijkanten, 32px onder */
+}
+
+/* 8. De kaartcontainer: grid (raster) */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* maak zoveel kolommen als passen (auto-fit),
+     elke kolom minimaal 300px en anders een gelijk deel (1fr) van de ruimte.
+     breed scherm = meerdere kolommen, telefoon = één kolom. */
+  gap: 24px;                    /* ruimte tussen de kaarten */
+}
+
+/* 9. Eén kaart: de blauwdruk die alle 16 kaarten gebruiken */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;          /* ronde hoeken */
+  padding: 24px;                /* ruimte tussen rand en tekst */
+}
+
+.card h3 {                      /* alleen h3's BINNEN een kaart */
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+}
+
+.card p {
+  color: var(--muted);
+}
