@@ -1,168 +1,94 @@
-/* 1. */
 :root {
-  --bg: #f3f6f9;          /* lichte grijsblauwe achtergrond */
-  --card-bg: #ffffff;     /* wit voor de kaarten */
-  --border: #d8e0e8;      /* subtiele randkleur */
-  --text: #11151c;        /* bijna zwart voor tekst */
-  --muted: #5a6573;       /* grijs voor subtitels */
-  --accent: #1d6b72;      /* teal-kleur */
+  --bg: #f3f6f9;
+  --card-bg: #ffffff;
+  --border: #d8e0e8;
+  --text: #11151c;
+  --muted: #5a6573;
+  --accent: #1d6b72;
 }
 
-/* 2. */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* 3. De pagina als geheel */
-body {
-  background: var(--bg);  /* var(--bg) haalt de waarde uit stap 1 op */
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; /* systeemlettertype van het apparaat */
-  line-height: 1.6;       /* regelafstand: 1,6 keer de lettergrootte */
-}
-
-/* 4. Inhoud niet over de volle schermbreedte, maar gecentreerd */
-header,
-main {
-  max-width: 1100px;      /* nooit breder dan 1100 pixels */
-  margin: 0 auto;         /* 0 boven/onder, "auto" links/rechts = centreren */
-  padding: 50px 24px;        /* ruimte aan de zijkanten, belangrijk op mobiel */
-}
-
-/* 5. Ruimte tussen de secties */
-section {
-  padding: 80px 0;              /* 80px boven en onder, 0 links/rechts */
-}
-
-/* 6. Sectietitels */
-h2 {
-  font-size: 2.5rem;            /* rem = relatief aan de standaard lettergrootte (meestal 16px), dus 2.5rem ≈ 40px */
-  letter-spacing: -0.03em;      /* letters iets dichter op elkaar */
-  line-height: 1.1;
-}
-
-/* 7. De subtitel onder elke h2 */
-section > p {
-  color: var(--muted);
-  font-size: 1.2rem;
-  margin: 12px 0 32px;          /* 12px boven, 0 zijkanten, 32px onder */
-}
-
-/* 8. De kaartcontainer: grid (raster) */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  /* maak zoveel kolommen als passen (auto-fit),
-     elke kolom minimaal 300px en anders een gelijk deel (1fr) van de ruimte.
-     breed scherm = meerdere kolommen, telefoon = één kolom. */
-  gap: 24px;                    /* ruimte tussen de kaarten */
-}
-
-/* 9. Eén kaart: de blauwdruk die alle 16 kaarten gebruiken */
-.card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 20px;          /* ronde hoeken */
-  padding: 24px;                /* ruimte tussen rand en tekst */
-}
-
-.card h3 {                      /* alleen h3's BINNEN een kaart */
-  font-size: 1.3rem;
-  margin-bottom: 12px;
-}
-
-.card p {
-  color: var(--muted);
-}
-
-.card p + p {
-  margin-top: 12px;
-}
-
-.card .meta {
-  color: var(--accent);
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-/* Labels: woorden in kleine pilvormige vakjes */
-.tags {
-  list-style: none;          /* geen opsommingstekens */
-  display: flex;
-  flex-wrap: wrap;           /* past het niet op één regel, dan door naar de volgende */
-  gap: 8px;
-}
-
-.tags li {
-  padding: 4px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(29, 107, 114, 0.2);
-  background: rgba(29, 107, 114, 0.08);   /* heel lichte teal */
-  color: var(--accent);
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
-/* 10. Soepel scrollen als je op een menulink klikt */
 html {
   scroll-behavior: smooth;
 }
 
-/* Maar niet voor wie "minder beweging" heeft ingesteld op zijn apparaat */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
 }
 
-/* 11. navigatiebalk */
-nav {
-  position: sticky;               /* blijft hangen zodra je erlangs scrolt */
-  top: 16px;                      /* 16px onder de bovenkant van het scherm */
-  z-index: 10;                    /* op de pagina */
-  width: fit-content;             /* zo breed als de links, niet de hele schermbreedte */
-  margin: 16px auto 0;            /* gecentreerd */
-  display: flex;                  /* links naast elkaar in een rij */
-  gap: 4px;
-  padding: 8px;
-  background: var(--card-bg);
-  border-radius: 999px;           /* extreem ronde hoeken = pilvorm */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* zachte schaduw */
+/* Layout */
+
+header,
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 50px 24px;
 }
 
-nav a {
-  color: var(--muted);
-  text-decoration: none;          /* geen onderstreping */
-  font-size: 0.9rem;
-  padding: 8px 14px;
-  border-radius: 999px;
-}
-
-nav a:hover {                     /* :hover = als de muis eroverheen gaat */
-  background: var(--accent);
-  color: #ffffff;
-}
-
-/* 12. De fix: bij een sprong naar een sectie 100px ruimte houden bovenaan,
-       zodat de kop niet onder de menubalk verdwijnt */
 header,
 section {
   scroll-margin-top: 10px;
 }
 
-/* 13. Hero: twee kolommen, de linker twee keer zo breed als de rechter */
+section {
+  padding: 80px 0;
+}
+
+h2 {
+  font-size: 2.5rem;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+section > p {
+  color: var(--muted);
+  font-size: 1.2rem;
+  margin: 12px 0 32px;
+}
+
+/* Navigation */
+
+nav {
+  position: sticky;
+  top: 16px;
+  z-index: 10;
+  width: fit-content;
+  margin: 16px auto 0;
+  display: flex;
+  gap: 4px;
+  padding: 8px;
+  background: var(--card-bg);
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 8px 14px;
+  border-radius: 999px;
+}
+
+nav a:hover {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+/* Hero */
+
 .hero {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 24px;
-}
-
-@media (max-width: 760px) {
-  .hero {
-    grid-template-columns: 1fr;
-  }
 }
 
 .hero-text {
@@ -170,13 +96,11 @@ section {
 }
 
 .hero h1 {
-  font-size: clamp(2.5rem, 7vw, 4.5rem); /* meeschalend met de schermbreedte, minimum en maximum */
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
   letter-spacing: -0.04em;
   line-height: 1;
 }
 
-/* ".hero .role" en niet alleen ".role": die laatste zou verliezen van ".card p"
-   uit regel 9, omdat die specifieker is. Twee classes winnen van class + element. */
 .hero .role {
   color: var(--text);
   text-transform: uppercase;
@@ -199,50 +123,50 @@ section {
 .hero-visual {
   min-height: 300px;
   display: flex;
-  align-items: center;      /* verticaal centreren, voor de bol straks */
-  justify-content: center;  /* horizontaal centreren */
+  align-items: center;
+  justify-content: center;
 }
 
-/* 14. Radar */
+/* Radar */
+
 .radar {
   position: relative;
   width: 240px;
   height: 240px;
   border-radius: 50%;
-  overflow: hidden;                 /* alles buiten de cirkel wordt afgeknipt */
+  overflow: hidden;
   border: 1px solid rgba(29, 107, 114, 0.35);
   background: repeating-radial-gradient(
     circle,
     transparent 0 29px,
-    rgba(29, 107, 114, 0.15) 29px 30px   /* elke 30px een dunne ring */
+    rgba(29, 107, 114, 0.15) 29px 30px
   );
 }
 
-/* Kruisdraden: twee pseudo-elementen, dus geen extra HTML nodig */
 .radar::before,
 .radar::after {
   content: "";
   position: absolute;
   background: rgba(29, 107, 114, 0.15);
 }
-.radar::before { left: 50%; top: 0; bottom: 0; width: 1px; }   /* verticaal */
-.radar::after  { top: 50%; left: 0; right: 0; height: 1px; }   /* horizontaal */
 
-/* Netwerklijnen */
+.radar::before { left: 50%; top: 0; bottom: 0; width: 1px; }
+.radar::after  { top: 50%; left: 0; right: 0; height: 1px; }
+
 .links {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
 }
+
 .links line {
   stroke: var(--accent);
   stroke-width: 0.4;
-  stroke-dasharray: 1.5 1.5;        /* stippellijn: 1,5 streep, 1,5 gat */
+  stroke-dasharray: 1.5 1.5;
   opacity: 0.5;
 }
 
-/* De sweep: een kegelvormig kleurverloop dat ronddraait */
 .sweep {
   position: absolute;
   inset: 0;
@@ -251,20 +175,18 @@ section {
   animation: sweep 4s linear infinite;
 }
 
-/* Stippen */
 .blip {
   position: absolute;
   width: 8px;
   height: 8px;
-  margin: -4px 0 0 -4px;            /* halve breedte terug: de stip staat precies OP zijn punt */
+  margin: -4px 0 0 -4px;
   border-radius: 50%;
   background: var(--accent);
   opacity: 0.25;
   animation: ping 4s ease-out infinite;
 }
 
-/* Positie + vertraging per stip. Vertraging = hoek vanaf boven / 360 × 4 seconden,
-   zodat elke stip oplicht precies als de straal erlangs komt. */
+/* Delay = angle from top / 360 × 4s, so each blip lights up as the sweep passes */
 .b1 { left: 68%; top: 30%; animation-delay: 0.47s; }
 .b2 { left: 78%; top: 60%; animation-delay: 1.22s; }
 .b3 { left: 40%; top: 72%; animation-delay: 2.27s; }
@@ -281,69 +203,95 @@ section {
   100% { opacity: 0.25; transform: scale(1); box-shadow: none; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .sweep,
-  .blip {
-    animation: none;
-  }
-  .blip {
-    opacity: 1;
-  }
+/* Card grids */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
 }
 
-/* 15. Indeling per sectie */
-
-/* Twee kolommen van gelijke breedte */
 .cards-2 {
   grid-template-columns: repeat(2, 1fr);
 }
 
-/* Een kaart die de hele rij beslaat. "1 / -1" = van de eerste tot de laatste kolomlijn */
 .card-wide {
   grid-column: 1 / -1;
 }
 
-/* Credentials: een raster van 6 kolommen, want 6 is deelbaar door 2 én 3.
-   Bovenste twee kaarten pakken elk 3 kolommen (= de helft),
-   de rest pakt er elk 2 (= een derde). */
+/* 6 columns: top row 2 × 3, bottom row 3 × 2 */
 .cards-creds {
   grid-template-columns: repeat(6, 1fr);
 }
+
 .cards-creds .card {
   grid-column: span 2;
 }
-.cards-creds .card:nth-child(-n + 2) {   /* "de eerste 2 kinderen" */
+
+.cards-creds .card:nth-child(-n + 2) {
   grid-column: span 3;
 }
 
-/* Mobiel: alles onder elkaar */
-@media (max-width: 760px) {
-  .cards-2,
-  .cards-creds {
-    grid-template-columns: 1fr;
-  }
-  .cards-creds .card,
-  .cards-creds .card:nth-child(-n + 2) {
-    grid-column: auto;               /* de "span" uitzetten, anders forceert hij extra kolommen */
-  }
+/* Cards */
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
 }
 
-/* 16. Klikbare kaarten */
+.card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+}
+
+.card p {
+  color: var(--muted);
+}
+
+.card p + p {
+  margin-top: 12px;
+}
+
+.card .meta {
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tags li {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(29, 107, 114, 0.2);
+  background: rgba(29, 107, 114, 0.08);
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
 .card-link {
-  display: block;                 /* een link wordt een blok, net als een gewone kaart */
-  color: inherit;                 /* tekstkleur van de pagina, niet linkblauw */
-  text-decoration: none;          /* geen onderstreping op alle tekst */
+  display: block;
+  color: inherit;
+  text-decoration: none;
   transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .card-link:hover {
   border-color: var(--accent);
-  transform: translateY(-3px);    /* 3px omhoog: hij "komt naar je toe" */
+  transform: translateY(-3px);
   box-shadow: 0 10px 24px rgba(29, 107, 114, 0.12);
 }
 
 .card-link:hover .meta {
-  text-decoration: underline;     /* alleen het adres onderstrepen bij hover */
+  text-decoration: underline;
 }
 
 .card-link:focus-visible {
@@ -351,10 +299,39 @@ section {
   outline-offset: 3px;
 }
 
+/* Responsive */
+
+@media (max-width: 760px) {
+  .hero,
+  .cards-2,
+  .cards-creds {
+    grid-template-columns: 1fr;
+  }
+
+  .cards-creds .card,
+  .cards-creds .card:nth-child(-n + 2) {
+    grid-column: auto;
+  }
+}
+
+/* Reduced motion */
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .sweep,
+  .blip,
   .card-link {
+    animation: none;
     transition: none;
   }
+
+  .blip {
+    opacity: 1;
+  }
+
   .card-link:hover {
     transform: none;
   }
