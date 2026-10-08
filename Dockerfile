@@ -1,3 +1,8 @@
 FROM nginxinc/nginx-unprivileged:alpine
-COPY --chmod=644 index.html style.css /usr/share/nginx/html/
+
+USER root
+COPY index.html style.css /usr/share/nginx/html/
+RUN chmod 644 /usr/share/nginx/html/index.html /usr/share/nginx/html/style.css
+USER 101
+
 EXPOSE 8080
