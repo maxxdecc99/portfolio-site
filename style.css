@@ -28,7 +28,7 @@ header,
 main {
   max-width: 1100px;      /* nooit breder dan 1100 pixels */
   margin: 0 auto;         /* 0 boven/onder, "auto" links/rechts = centreren */
-  padding: 0 24px;        /* ruimte aan de zijkanten, belangrijk op mobiel */
+  padding: 50px 24px;        /* ruimte aan de zijkanten, belangrijk op mobiel */
 }
 
 /* 5. Ruimte tussen de secties */
@@ -75,4 +75,51 @@ section > p {
 
 .card p {
   color: var(--muted);
+}
+
+/* 10. Soepel scrollen als je op een menulink klikt */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Maar niet voor wie "minder beweging" heeft ingesteld op zijn apparaat */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* 11. navigatiebalk */
+nav {
+  position: sticky;               /* blijft hangen zodra je erlangs scrolt */
+  top: 16px;                      /* 16px onder de bovenkant van het scherm */
+  z-index: 10;                    /* op de pagina */
+  width: fit-content;             /* zo breed als de links, niet de hele schermbreedte */
+  margin: 16px auto 0;            /* gecentreerd */
+  display: flex;                  /* links naast elkaar in een rij */
+  gap: 4px;
+  padding: 8px;
+  background: var(--card-bg);
+  border-radius: 999px;           /* extreem ronde hoeken = pilvorm */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* zachte schaduw */
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;          /* geen onderstreping */
+  font-size: 0.9rem;
+  padding: 8px 14px;
+  border-radius: 999px;
+}
+
+nav a:hover {                     /* :hover = als de muis eroverheen gaat */
+  background: var(--accent);
+  color: #ffffff;
+}
+
+/* 12. De fix: bij een sprong naar een sectie 100px ruimte houden bovenaan,
+       zodat de kop niet onder de menubalk verdwijnt */
+header,
+section {
+  scroll-margin-top: 10px;
 }
