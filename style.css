@@ -77,6 +77,34 @@ section > p {
   color: var(--muted);
 }
 
+.card p + p {
+  margin-top: 12px;
+}
+
+.card .meta {
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Labels: woorden in kleine pilvormige vakjes */
+.tags {
+  list-style: none;          /* geen opsommingstekens */
+  display: flex;
+  flex-wrap: wrap;           /* past het niet op één regel, dan door naar de volgende */
+  gap: 8px;
+}
+
+.tags li {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(29, 107, 114, 0.2);
+  background: rgba(29, 107, 114, 0.08);   /* heel lichte teal */
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
 /* 10. Soepel scrollen als je op een menulink klikt */
 html {
   scroll-behavior: smooth;
@@ -260,5 +288,74 @@ section {
   }
   .blip {
     opacity: 1;
+  }
+}
+
+/* 15. Indeling per sectie */
+
+/* Twee kolommen van gelijke breedte */
+.cards-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Een kaart die de hele rij beslaat. "1 / -1" = van de eerste tot de laatste kolomlijn */
+.card-wide {
+  grid-column: 1 / -1;
+}
+
+/* Credentials: een raster van 6 kolommen, want 6 is deelbaar door 2 én 3.
+   Bovenste twee kaarten pakken elk 3 kolommen (= de helft),
+   de rest pakt er elk 2 (= een derde). */
+.cards-creds {
+  grid-template-columns: repeat(6, 1fr);
+}
+.cards-creds .card {
+  grid-column: span 2;
+}
+.cards-creds .card:nth-child(-n + 2) {   /* "de eerste 2 kinderen" */
+  grid-column: span 3;
+}
+
+/* Mobiel: alles onder elkaar */
+@media (max-width: 760px) {
+  .cards-2,
+  .cards-creds {
+    grid-template-columns: 1fr;
+  }
+  .cards-creds .card,
+  .cards-creds .card:nth-child(-n + 2) {
+    grid-column: auto;               /* de "span" uitzetten, anders forceert hij extra kolommen */
+  }
+}
+
+/* 16. Klikbare kaarten */
+.card-link {
+  display: block;                 /* een link wordt een blok, net als een gewone kaart */
+  color: inherit;                 /* tekstkleur van de pagina, niet linkblauw */
+  text-decoration: none;          /* geen onderstreping op alle tekst */
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.card-link:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);    /* 3px omhoog: hij "komt naar je toe" */
+  box-shadow: 0 10px 24px rgba(29, 107, 114, 0.12);
+}
+
+.card-link:hover .meta {
+  text-decoration: underline;     /* alleen het adres onderstrepen bij hover */
+}
+
+.card-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-link {
+    transition: none;
+  }
+  .card-link:hover {
+    transform: none;
   }
 }
