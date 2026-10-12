@@ -1,3 +1,6 @@
 # macOS-rommel
 .DS_Store
 ._*
+
+# GitHub pipeline
+gha-creds-*.json

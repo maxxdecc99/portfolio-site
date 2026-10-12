@@ -1,0 +1,30 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: projects/337331056457/locations/global/workloadIdentityPools/github/providers/portfolio-site
+          service_account: github-deployer@portfolio-site-511008.iam.gserviceaccount.com
+
+      - uses: google-github-actions/setup-gcloud@v3
+
+      - name: Deploy
+        run: gcloud run deploy portfolio-site --source . --region europe-west4 --project portfolio-site-511008 --max-instances 2 --quiet
