@@ -254,6 +254,11 @@ nav a:hover {
   margin-top: 12px;
 }
 
+.card p + .tags,
+.card .tags + p {
+  margin-top: 12px;
+}
+
 .card .meta {
   color: var(--accent);
   font-size: 0.85rem;
@@ -290,7 +295,7 @@ nav a:hover {
   box-shadow: 0 10px 24px rgba(29, 107, 114, 0.12);
 }
 
-.card-link:hover .meta {
+.card-link:hover .meta:last-child {
   text-decoration: underline;
 }
 
