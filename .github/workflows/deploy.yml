@@ -3,6 +3,9 @@ name: Deploy to Cloud Run
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'README.md'
+      - 'screenshot*.png'
   workflow_dispatch:
 
 permissions:
