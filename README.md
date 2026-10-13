@@ -25,6 +25,7 @@ I first built this site in Framer, then rebuilt it by hand to learn the full pat
 - The domain doesn't send email, so SPF and DMARC reject anything pretending to come from it.
 - System fonts only, no external scripts or trackers.
 - Respects reduced-motion settings and works with keyboard navigation.
+- The site runs as its own service account with no permissions at all. A static site doesn't need to call any Google APIs, so a compromised container gets a token that can't do anything.
 
 ## Run it locally
 
@@ -49,11 +50,9 @@ Cloud Build builds the image from the Dockerfile, and Cloud Run serves it with a
 
 - Cloud Run domain mapping is still in Preview, and it doesn't let me disable TLS 1.0/1.1. Firebase Hosting or a load balancer would fix that.
 - No security headers yet (CSP, HSTS, X-Content-Type-Options).
-- The site runs as the default compute service account, which has more permissions than a static site needs.
 
 ## Next up
 
-- A dedicated runtime service account with no permissions
 - Security headers through a custom nginx config
 - Terraform for the infrastructure
 
