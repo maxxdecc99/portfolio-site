@@ -16,16 +16,16 @@ I first built this site in Framer, then rebuilt it by hand to learn the full pat
 
 ## Choices I made
 
-- nginx runs as a non-root user. Site files are owned by root and read-only, so even a compromised web server can't change the site.
-- `.dockerignore` is an allowlist, so only the two site files get into the image.
+- nginx runs as a non-root user. Site files and config are owned by root and read-only, so even a compromised web server can't change them.
+- `.dockerignore` is an allowlist, so only the site files and nginx config get into the image.
+- Strict security headers, including a Content Security Policy that blocks all scripts and external resources. Scores A+ on securityheaders.com.
 - GitHub Actions logs in with Workload Identity Federation instead of a service account key. There's no long-lived secret that can leak, and only pushes to `main` in this repo can deploy.
-- The deploy account can only deploy. It can't change who has access to the site.
+- Three separate service accounts: one to deploy, one to build, one to run the site. Each has only what its job needs. The runtime account has no permissions at all, so a compromised container gets a token that can't do anything.
 - Max 2 instances. Under heavy load the site may slow down, but the bill can't run away.
 - The Cloudflare proxy is off, because Cloud Run domain mapping needs direct DNS for its certificate. That also means no Cloudflare DDoS protection, which I accept for a portfolio.
 - The domain doesn't send email, so SPF and DMARC reject anything pretending to come from it.
 - System fonts only, no external scripts or trackers.
 - Respects reduced-motion settings and works with keyboard navigation.
-- The site runs as its own service account with no permissions at all. A static site doesn't need to call any Google APIs, so a compromised container gets a token that can't do anything.
 
 ## Run it locally
 
@@ -38,23 +38,16 @@ Then open http://localhost:8080.
 
 ## Deploy
 
-Every push to `main` deploys automatically through GitHub Actions (`.github/workflows/deploy.yml`). The workflow authenticates to Google Cloud without stored keys, then runs:
-
-```bash
-gcloud run deploy portfolio-site --source . --region europe-west4 --max-instances 2
-```
-
-Cloud Build builds the image from the Dockerfile, and Cloud Run serves it with a Google-managed certificate.
+Every push to `main` that changes the site deploys automatically through GitHub Actions (`.github/workflows/deploy.yml`). README-only changes are skipped. The workflow authenticates to Google Cloud without stored keys, then Cloud Build builds the image and Cloud Run serves it with a Google-managed certificate.
 
 ## Known limitations
 
 - Cloud Run domain mapping is still in Preview, and it doesn't let me disable TLS 1.0/1.1. Firebase Hosting or a load balancer would fix that.
-- No security headers yet (CSP, HSTS, X-Content-Type-Options).
 
 ## Next up
 
-- Security headers through a custom nginx config
 - Terraform for the infrastructure
+- TLS 1.2+ only, through Firebase Hosting or a load balancer
 
 ---
 
