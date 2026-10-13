@@ -30,4 +30,12 @@ jobs:
       - uses: google-github-actions/setup-gcloud@v3
 
       - name: Deploy
-        run: gcloud run deploy portfolio-site --source . --region europe-west4 --project portfolio-site-511008 --max-instances 2 --service-account portfolio-runtime@portfolio-site-511008.iam.gserviceaccount.com --quiet
+        run: |
+          gcloud run deploy portfolio-site \
+            --source . \
+            --region europe-west4 \
+            --project portfolio-site-511008 \
+            --max-instances 2 \
+            --service-account portfolio-runtime@portfolio-site-511008.iam.gserviceaccount.com \
+            --build-service-account projects/portfolio-site-511008/serviceAccounts/portfolio-builder@portfolio-site-511008.iam.gserviceaccount.com \
+            --quiet
